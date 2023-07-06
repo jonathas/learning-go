@@ -1,16 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-type CheckingAccount struct {
-	holder        string
-	agencyNumber  int
-	accountNumber int
-	balance       float64
-}
+	"github.com/jonathas/bank/accounts"
+)
 
 func structsAndPointers() {
-	checkingAccount1 := CheckingAccount{
+	checkingAccount1 := accounts.CheckingAccount{
 		holder: "Jon",
 		agencyNumber: 589,
 		accountNumber: 123456,
@@ -18,22 +15,22 @@ func structsAndPointers() {
 
 	fmt.Println(checkingAccount1)
 
-	checkingAccount2 := CheckingAccount{"Estela",222,111222,200}
+	checkingAccount2 := accounts.CheckingAccount{"Estela",222,111222,200}
 
 	fmt.Println(checkingAccount2)
 
-	checkingAccount3 := CheckingAccount{"Estela",222,111222,200}
+	checkingAccount3 := accounts.CheckingAccount{"Estela",222,111222,200}
 
 	// Comparing two structs, returns true
 	fmt.Println(checkingAccount2 == checkingAccount3)
 
-	myAccount1 := new(CheckingAccount)
+	myAccount1 := new(accounts.CheckingAccount)
 	myAccount1.holder = "Jon"
 	myAccount1.balance = 500
 
 	fmt.Println(myAccount1)
 
-	myAccount2 := new(CheckingAccount)
+	myAccount2 := new(accounts.CheckingAccount)
 	myAccount2.holder = "Jon"
 	myAccount2.balance = 500
 
@@ -48,40 +45,6 @@ func structsAndPointers() {
 	fmt.Println(*myAccount1 == *myAccount2)
 }
 
-// c points to who's calling the function
-func (c *CheckingAccount) withdraw(value float64) string {
-	fmt.Println("Withdrawing", value)
-
-	isWithDrawAllowed := value <= c.balance && value > 0
-
-	if isWithDrawAllowed {
-		c.balance -= value
-		return "Withdrawal successful"
-	}
-	return "Insufficient funds"
-}
-
-func (c *CheckingAccount) deposit(value float64) (string, float64) {
-	fmt.Println("Depositing", value)
-
-	if value > 0 {
-		c.balance += value
-		return "Deposit successful", c.balance
-	}
-	return "Invalid deposit value", c.balance
-}
-
-func (c *CheckingAccount) transfer(value float64, destinationAccount *CheckingAccount) bool {
-	fmt.Println("Transferring", value)
-
-	if value < c.balance && value > 0 {
-		c.balance -= value
-		destinationAccount.balance += value
-		return true
-	}
-	return false
-}
-
 // Variadic function, can receive any number of parameters
 func sum(numbers ...int) int {
 	result := 0
@@ -94,7 +57,7 @@ func sum(numbers ...int) int {
 func main() {
 	structsAndPointers()
 
-	silviaAccount := CheckingAccount{}
+	silviaAccount := accounts.CheckingAccount{}
 	silviaAccount.holder = "Silvia"
 	silviaAccount.balance = 500
 
@@ -105,7 +68,7 @@ func main() {
 	status, value := silviaAccount.deposit(300.0)
 	fmt.Println(status, value)
 
-	jonAccount := new(CheckingAccount)
+	jonAccount := new(accounts.CheckingAccount)
 	jonAccount.holder = "Jon"
 	jonAccount.balance = 500
 
