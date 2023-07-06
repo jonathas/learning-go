@@ -1,0 +1,9 @@
+06/07/2023 14:54:46 - https://random-status-code.herokuapp.com/ - online: false
+06/07/2023 14:54:47 - https://www.alura.com.br - online: true
+06/07/2023 14:54:57 - https://www.caelum.com.br - online: true
+06/07/2023 14:55:03 - https://random-status-code.herokuapp.com/ - online: false
+06/07/2023 14:55:03 - https://www.alura.com.br - online: true
+06/07/2023 14:55:03 - https://www.caelum.com.br - online: true
+06/07/2023 14:55:08 - https://random-status-code.herokuapp.com/ - online: false
+06/07/2023 14:55:08 - https://www.alura.com.br - online: true
+06/07/2023 14:55:08 - https://www.caelum.com.br - online: true
