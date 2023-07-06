@@ -61,6 +61,16 @@ func (c *CheckingAccount) withdraw(value float64) string {
 	return "Insufficient funds"
 }
 
+func (c *CheckingAccount) deposit(value float64) (string, float64) {
+	fmt.Println("Depositing", value)
+
+	if value > 0 {
+		c.balance += value
+		return "Deposit successful", c.balance
+	}
+	return "Invalid deposit value", c.balance
+}
+
 // Variadic function, can receive any number of parameters
 func sum(numbers ...int) int {
 	result := 0
@@ -80,6 +90,9 @@ func main() {
 	fmt.Println(silviaAccount)
 
 	fmt.Println(silviaAccount.withdraw(100.0))
+
+	status, value := silviaAccount.deposit(300.0)
+	fmt.Println(status, value)
 
 	fmt.Println(sum(1))
 	fmt.Println(sum(1,1))
