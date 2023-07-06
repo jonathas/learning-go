@@ -3,15 +3,15 @@ package main
 import (
 	"fmt"
 
-	"github.com/jonathas/bank/accounts"
+	"github.com/jonathas/learning-go/bank/accounts"
 )
 
 func structsAndPointers() {
 	checkingAccount1 := accounts.CheckingAccount{
-		holder: "Jon",
-		agencyNumber: 589,
-		accountNumber: 123456,
-		balance: 125.50}
+		Holder: "Jon",
+		AgencyNumber: 589,
+		AccountNumber: 123456,
+		Balance: 125.50}
 
 	fmt.Println(checkingAccount1)
 
@@ -25,14 +25,14 @@ func structsAndPointers() {
 	fmt.Println(checkingAccount2 == checkingAccount3)
 
 	myAccount1 := new(accounts.CheckingAccount)
-	myAccount1.holder = "Jon"
-	myAccount1.balance = 500
+	myAccount1.Holder = "Jon"
+	myAccount1.Balance = 500
 
 	fmt.Println(myAccount1)
 
 	myAccount2 := new(accounts.CheckingAccount)
-	myAccount2.holder = "Jon"
-	myAccount2.balance = 500
+	myAccount2.Holder = "Jon"
+	myAccount2.Balance = 500
 
 	// Comparing two pointers, returns false
 	fmt.Println(myAccount1 == myAccount2)
@@ -58,28 +58,28 @@ func main() {
 	structsAndPointers()
 
 	silviaAccount := accounts.CheckingAccount{}
-	silviaAccount.holder = "Silvia"
-	silviaAccount.balance = 500
+	silviaAccount.Holder = "Silvia"
+	silviaAccount.Balance = 500
 
 	fmt.Println(silviaAccount)
 
-	fmt.Println(silviaAccount.withdraw(100.0))
+	fmt.Println(silviaAccount.Withdraw(100.0))
 
-	status, value := silviaAccount.deposit(300.0)
+	status, value := silviaAccount.Deposit(300.0)
 	fmt.Println(status, value)
 
 	jonAccount := new(accounts.CheckingAccount)
-	jonAccount.holder = "Jon"
-	jonAccount.balance = 500
+	jonAccount.Holder = "Jon"
+	jonAccount.Balance = 500
 
-	fmt.Println("Jon's account balance:", jonAccount.balance)
-	fmt.Println("Silvia's account balance:", silviaAccount.balance)
+	fmt.Println("Jon's account balance:", jonAccount.Balance)
+	fmt.Println("Silvia's account balance:", silviaAccount.Balance)
 
 	fmt.Println("Silvia transferring 100 to Jon:")
-	silviaAccount.transfer(100, jonAccount)
-	fmt.Println("Silvia's account balance after transfer:", silviaAccount.balance)
+	silviaAccount.Transfer(100, jonAccount)
+	fmt.Println("Silvia's account balance after transfer:", silviaAccount.Balance)
 
-	fmt.Println("Jon's account balance after transfer:", jonAccount.balance)
+	fmt.Println("Jon's account balance after transfer:", jonAccount.Balance)
 
 	fmt.Println(sum(1))
 	fmt.Println(sum(1,1))
