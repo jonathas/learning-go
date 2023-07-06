@@ -71,6 +71,17 @@ func (c *CheckingAccount) deposit(value float64) (string, float64) {
 	return "Invalid deposit value", c.balance
 }
 
+func (c *CheckingAccount) transfer(value float64, destinationAccount *CheckingAccount) bool {
+	fmt.Println("Transferring", value)
+
+	if value < c.balance && value > 0 {
+		c.balance -= value
+		destinationAccount.balance += value
+		return true
+	}
+	return false
+}
+
 // Variadic function, can receive any number of parameters
 func sum(numbers ...int) int {
 	result := 0
@@ -93,6 +104,19 @@ func main() {
 
 	status, value := silviaAccount.deposit(300.0)
 	fmt.Println(status, value)
+
+	jonAccount := new(CheckingAccount)
+	jonAccount.holder = "Jon"
+	jonAccount.balance = 500
+
+	fmt.Println("Jon's account balance:", jonAccount.balance)
+	fmt.Println("Silvia's account balance:", silviaAccount.balance)
+
+	fmt.Println("Silvia transferring 100 to Jon:")
+	silviaAccount.transfer(100, jonAccount)
+	fmt.Println("Silvia's account balance after transfer:", silviaAccount.balance)
+
+	fmt.Println("Jon's account balance after transfer:", jonAccount.balance)
 
 	fmt.Println(sum(1))
 	fmt.Println(sum(1,1))
