@@ -9,7 +9,7 @@ type CheckingAccount struct {
 	balance       float64
 }
 
-func main() {
+func structsAndPointers() {
 	checkingAccount1 := CheckingAccount{
 		holder: "Jon",
 		agencyNumber: 589,
@@ -46,4 +46,43 @@ func main() {
 
 	// However, if we compare the content of the pointers, it returns true
 	fmt.Println(*myAccount1 == *myAccount2)
+}
+
+// c points to who's calling the function
+func (c *CheckingAccount) withdraw(value float64) string {
+	fmt.Println("Withdrawing", value)
+
+	isWithDrawAllowed := value <= c.balance && value > 0
+
+	if isWithDrawAllowed {
+		c.balance -= value
+		return "Withdrawal successful"
+	}
+	return "Insufficient funds"
+}
+
+// Variadic function, can receive any number of parameters
+func sum(numbers ...int) int {
+	result := 0
+	for _, number := range numbers {
+			result += number
+	}
+	return result
+}
+
+func main() {
+	structsAndPointers()
+
+	silviaAccount := CheckingAccount{}
+	silviaAccount.holder = "Silvia"
+	silviaAccount.balance = 500
+
+	fmt.Println(silviaAccount)
+
+	fmt.Println(silviaAccount.withdraw(100.0))
+
+	fmt.Println(sum(1))
+	fmt.Println(sum(1,1))
+	fmt.Println(sum(1,1,1))
+	fmt.Println(sum(1,1,2,4))
 }
