@@ -63,6 +63,14 @@ func sum(numbers ...int) int {
 	return result
 }
 
+func PayInvoice(account verifyAccount, value float64) {
+	account.Withdraw(value)
+}
+
+type verifyAccount interface {
+	Withdraw(value float64) string
+}
+
 func main() {
 	structsAndPointers()
 
@@ -99,4 +107,22 @@ func main() {
 	fmt.Println(sum(1,1))
 	fmt.Println(sum(1,1,1))
 	fmt.Println(sum(1,1,2,4))
+
+	/**
+	* Doesn't matter if the account is checking or savings, as long as it implements the Withdraw method,
+	* it can be used in the PayInvoice function with the verifyAccount interface
+	*/
+	denisAccount := accounts.SavingsAccount{}
+	denisAccount.Deposit(500)
+	fmt.Println(denisAccount.GetBalance())
+
+	PayInvoice(&denisAccount, 100)
+	fmt.Println(denisAccount.GetBalance())
+
+	maryAccount := accounts.CheckingAccount{}
+	maryAccount.Deposit(500)
+	fmt.Println(maryAccount.GetBalance())
+
+	PayInvoice(&maryAccount, 300)
+	fmt.Println(maryAccount.GetBalance())
 }
