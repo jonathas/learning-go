@@ -12,7 +12,7 @@ type Product struct {
 
 func (product Product) GetAll() []Product {
 	db := db.ConnectDB()
-	result, err := db.Query("select * from products")
+	result, err := db.Query("SELECT * FROM products")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -42,4 +42,17 @@ func (product Product) GetAll() []Product {
 	defer db.Close()
 
 	return products
+}
+
+func (product Product) Insert(name, description string, price float64, quantity int) {
+	db := db.ConnectDB()
+
+	insert, err := db.Prepare("INSERT INTO products(name, description, price, quantity) VALUES ($1, $2, $3, $4)")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	insert.Exec(name, description, price, quantity)
+
+	defer db.Close()
 }
