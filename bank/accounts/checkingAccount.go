@@ -1,9 +1,17 @@
 package accounts
 
-import "fmt"
+import (
+	"fmt"
 
+	"github.com/jonathas/learning-go/bank/customers"
+)
+
+/**
+ * Attribute names start with uppercase so they can be exported.
+ * If they start with lowercase, they can only be used inside the package (private)
+ */
 type CheckingAccount struct {
-	Holder        string
+	Holder        customers.Holder
 	AgencyNumber  int
 	AccountNumber int
 	Balance       float64
