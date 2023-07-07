@@ -56,3 +56,48 @@ func (product Product) Insert(name, description string, price float64, quantity 
 
 	defer db.Close()
 }
+
+func (product Product) GetById(id string) Product {
+	db := db.ConnectDB()
+
+	result, err := db.Query("SELECT * FROM products WHERE id = $1", id)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	p := Product{}
+
+	for result.Next() {
+		var id, quantity int
+		var name, description string
+		var price float64
+
+		err = result.Scan(&id, &name, &description, &price, &quantity)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		p.Id = id
+		p.Name = name
+		p.Description = description
+		p.Price = price
+		p.Quantity = quantity
+	}
+
+	defer db.Close()
+
+	return p
+}
+
+func (product Product) Delete(id string) {
+	db := db.ConnectDB()
+
+	delete, err := db.Prepare("DELETE FROM products WHERE id = $1")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	delete.Exec(id)
+
+	defer db.Close()
+}
