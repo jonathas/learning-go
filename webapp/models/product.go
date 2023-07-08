@@ -1,6 +1,10 @@
 package models
 
-import "github.com/jonathas/learning-go/webapp/db"
+import (
+	"database/sql"
+
+	"github.com/jonathas/learning-go/webapp/db"
+)
 
 type Product struct {
 	Id 					int
@@ -17,6 +21,14 @@ func (product Product) GetAll() []Product {
 		panic(err.Error())
 	}
 
+	products := Product{}.populateProducts(result)
+
+	defer db.Close()
+
+	return products
+}
+
+func (product Product) populateProducts(result *sql.Rows) []Product {
 	p := Product{}
 	products := []Product{}
 
@@ -25,7 +37,7 @@ func (product Product) GetAll() []Product {
 		var name, description string
 		var price float64
 
-		err = result.Scan(&id, &name, &description, &price, &quantity)
+		err := result.Scan(&id, &name, &description, &price, &quantity)
 		if err != nil {
 			panic(err.Error())
 		}
@@ -38,8 +50,6 @@ func (product Product) GetAll() []Product {
 
 		products = append(products, p)
 	}
-
-	defer db.Close()
 
 	return products
 }
@@ -65,28 +75,11 @@ func (product Product) GetById(id string) Product {
 		panic(err.Error())
 	}
 
-	p := Product{}
-
-	for result.Next() {
-		var id, quantity int
-		var name, description string
-		var price float64
-
-		err = result.Scan(&id, &name, &description, &price, &quantity)
-		if err != nil {
-			panic(err.Error())
-		}
-
-		p.Id = id
-		p.Name = name
-		p.Description = description
-		p.Price = price
-		p.Quantity = quantity
-	}
+	products := Product{}.populateProducts(result)
 
 	defer db.Close()
 
-	return p
+	return products[0]
 }
 
 func (product Product) Update(id int, name, description string, price float64, quantity int) {
