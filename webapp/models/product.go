@@ -12,7 +12,7 @@ type Product struct {
 
 func (product Product) GetAll() []Product {
 	db := db.ConnectDB()
-	result, err := db.Query("SELECT * FROM products")
+	result, err := db.Query("SELECT * FROM products ORDER BY name ASC")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -87,6 +87,19 @@ func (product Product) GetById(id string) Product {
 	defer db.Close()
 
 	return p
+}
+
+func (product Product) Update(id int, name, description string, price float64, quantity int) {
+	db := db.ConnectDB()
+
+	update, err := db.Prepare("UPDATE products SET name = $1, description = $2, price = $3, quantity = $4 WHERE id = $5")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	update.Exec(name, description, price, quantity, id)
+
+	defer db.Close()
 }
 
 func (product Product) Delete(id string) {
