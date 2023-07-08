@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/jonathas/learning-go/bank/accounts"
-	"github.com/jonathas/learning-go/bank/customers"
+	"github.com/jonathas/learning-go/bank-oop/accounts"
+	"github.com/jonathas/learning-go/bank-oop/customers"
 )
 
 func structsAndPointers() {

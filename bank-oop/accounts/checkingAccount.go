@@ -3,7 +3,7 @@ package accounts
 import (
 	"fmt"
 
-	"github.com/jonathas/learning-go/bank/customers"
+	"github.com/jonathas/learning-go/bank-oop/customers"
 )
 
 /**
